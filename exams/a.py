@@ -8,32 +8,34 @@ df = pd.read_csv(file_path)
 # Calculate the average scores for each subject
 average_scores = df[["math score", "reading score", "writing score"]].mean()
 
+# Print the results
+print("Average Scores:")
+print(f"Math score: {average_scores['math score']:.2f}")
+print(f"Reading score: {average_scores['reading score']:.2f}")
+print(f"Writing score: {average_scores['writing score']:.2f}")
+
+
 
 # Calculate the total score for each student
 df['total score'] = df['math score'] + df['reading score'] + df['writing score']
 
 # Identify the top 5 students with the highest total scores
 top_5_students = df.nlargest(5, 'total score')
-# Print the results
-print("Average Scores:")
-print(f"Math score: {average_scores['math score']:.2f}")
-print(f"Reading score: {average_scores['reading score']:.2f}")
-print(f"Writing score: {average_scores['writing score']:.2f}")
 print("Top 5 Students with Highest Total Scores:")
 print(top_5_students)
 
 
-# plt.figure(figsize=(10, 6))
-# df[["math score", "reading score", "writing score"]].boxplot()
+plt.figure(figsize=(10, 6))
+df[["math score", "reading score", "writing score"]].boxplot()
 
-# # Customize the chart
-# plt.title("Score Distribution for Each Subject", fontsize=16)
-# plt.ylabel("Scores", fontsize=12)
-# plt.xlabel("Subjects", fontsize=12)
-# plt.grid(True)
+# Customize the chart
+plt.title("Score Distribution for Each Subject", fontsize=16)
+plt.ylabel("Scores", fontsize=12)
+plt.xlabel("Subjects", fontsize=12)
+plt.grid(True)
 
-# # Show the plot
-# plt.show()
+# Show the plot
+plt.show()
 
 # Calculate total scores
 def calculate_below_50_percentage(column):
@@ -44,13 +46,13 @@ subjects = ["math score", "reading score", "writing score"]
 below_50_percentages = {subject: calculate_below_50_percentage(subject) for subject in subjects}
 
 # Identify subjects where more than 30% of students scored below 50
-subjects_below_threshold = [subject for subject, percentage in below_50_percentages.items() if percentage > 10]
+subjects_below_threshold = [subject for subject, percentage in below_50_percentages.items() if percentage > 30]
 
 # Print the results
 print("Subjects where more than 30% of students scored below 50:")
 for subject in subjects_below_threshold:
     print(f"{subject}: {below_50_percentages[subject]:.2f}% of students scored below 50")
-
+else: print("No one scored below 50")
     
 if "attendance" not in df.columns:
     print("The dataset must include an 'attendance' column to analyze.")
